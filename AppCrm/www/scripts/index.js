@@ -1,23 +1,44 @@
-﻿// Si quiere una introducción sobre la plantilla En blanco, vea la siguiente documentación:
-// http://go.microsoft.com/fwlink/?LinkID=397704
-// Para depurar código al cargar la página en cordova-simulate o en dispositivos o emuladores Android: inicie la aplicación, establezca puntos de interrupción 
-// y ejecute "window.location.reload()" en la Consola de JavaScript.
-(function () {
+﻿(function () {
     "use strict";
 
-    document.addEventListener( 'deviceready', onDeviceReady.bind( this ), false );
+    //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
+    document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
     function onDeviceReady() {
-        // Controlar la pausa de Cordova y reanudar eventos
-        document.addEventListener( 'pause', onPause.bind( this ), false );
-        document.addEventListener( 'resume', onResume.bind( this ), false );
-        
-        // TODO: Cordova se ha cargado. Haga aquí las inicializaciones que necesiten Cordova.
-        var parentElement = document.getElementById('deviceready');
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+        var user = getUrlParameter('usuario');
+        var passw = getUrlParameter('contrasena');
+        console.log(user);
+        console.log(passw);
+
+        if (user != null && passw != null) {
+            $.get('http://www.miracomovendo.com/extranet/service_login.aspx?usuario=' + user + '&contrasena=' + passw, function (data) {
+                var obj = JSON.parse(data);
+                if (obj.result != 'OK') {
+                    alert('Introduce un email y una contraseña validos !!');
+                } else {
+                    var cod = obj.cod
+                    //guardamos el valor del codigo en el localStorage para usarlo posteriormente
+                    localStorage.setItem("codigo", cod);
+                    window.location.href = "home.html";
+                };
+            });
+        };
     };
 
     function onPause() {
@@ -27,4 +48,4 @@
     function onResume() {
         // TODO: esta aplicación se ha reactivado. Restaure el estado de la aplicación aquí.
     };
-} )();
+})();

@@ -1,0 +1,61 @@
+{
+  "users": [
+    {
+      "address": {
+        "city": "Betanzos",
+        "state": "España"
+      },
+      "email": "doval@aracnosoft.com",
+      "last_name": "Doval Fraga",
+      "name": "Jose Angel",
+      "password": "aracno.1",
+      "phone": {
+        "home": "981772234",
+        "mobile": "600700685"
+      },
+      "root": true
+    },
+    {
+      "address": {
+        "city": "Bergondo",
+        "state": "España"
+      },
+      "email": "jdapena@aracnosoft.com",
+      "last_name": "Dapena Carabel",
+      "name": "Jorge",
+      "password": "aracno.1",
+      "phone": {
+        "home": null,
+        "mobile": null
+      }
+    },
+    {
+      "address": {
+        "city": "Miño",
+        "state": "España"
+      },
+      "email": "Tecnico1@aracnosoft.com",
+      "last_name": "Valiño",
+      "name": "Victor",
+      "password": "aracno.1",
+      "phone": {
+        "home": null,
+        "mobile": null
+      }
+    },
+    {
+      "address": {
+        "city": "Coruña",
+        "state": "España"
+      },
+      "email": "tecnico2@aracnosoft.com",
+      "last_name": null,
+      "name": "Martin",
+      "password": "aracno.1",
+      "phone": {
+        "home": null,
+        "mobile": null
+      }
+    }
+  ]
+}
