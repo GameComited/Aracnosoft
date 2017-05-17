@@ -7,15 +7,15 @@
 
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
-
-    function onDeviceReady() {
+    
+    function onDeviceReady() {  
         $.get('nav.html', function (data) {
             $('#menubar').html(data);
             //console.log(data);
         });
     };
 
-    function onPause() {
+   function onPause() {
         // TODO: esta aplicación se ha suspendido. Guarde el estado de la aplicación aquí.
     };
 

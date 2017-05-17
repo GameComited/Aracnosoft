@@ -9,7 +9,8 @@
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
     function onDeviceReady() {
-        var codigo = localStorage.getItem('codigo');
+        // esta linea es para cojer el valor del localstorage codigo en la variable codigo
+        //var codigo = localStorage.getItem('codigo');
         //alert(codigo); 
 
     };
