@@ -13,14 +13,76 @@
 </head>
 <body>
     <div id="deviceready">
-        <header id="menubar"></header><!--Fin Header-->
-        <div class="container">
-            <div id="caja_flotante">
-                <div id="cont_caja_flotante">
-                    <a href="crearContac.html"><span class="glyphicon glyphicon-plus"></span><span class="glyphicon glyphicon-user"></span></a>
+        <header id="menubar">
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Aracnosoft</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#"><span class="glyphicon glyphicon-check"></span> Notificaciones</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-book"></span> Historico</a></li>
+                            <li><a href="contactos.html"><span class="glyphicon glyphicon-user"></span> Contactos</a></li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify"></span> Menu <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Item #1</a></li>
+                                    <li><a href="#">Item #2</a></li>
+                                    <li><a href="#">Item #3</a></li>
+                                    <li><a href="#">Item #4</a></li>
+                                    <li><a href="#">Item #5</a></li>
+                                    <li><a href="#">Item #6</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!--<button type="button" id="btnlout" class="btn btn-warning">Cerrar Sesi&oacute;n</button>-->
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#" id="btnlout">Cerrar Sesi&oacute;n</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header><!--Fin Header-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-6"></div>
+                    <a href="crearContac.html" class="col-xs-6"><span class="glyphicon glyphicon-plus-sign"></span> Añadir Contactos</a>
+                </div>
+                <div class="container">
+                    <h2>Lista de Contactos</h2>
+                    <p>Esta es una lista de prueba de los contactos</p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Telefono</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Juan</td>
+                                <td>611811911</td>
+                                <td>juan@prueba.es</td>
+                            </tr>
+                            <tr>
+                                <td>Miguel</td>
+                                <td>622822922</td>
+                                <td>Miguel@prueba.es</td>
+                            </tr>
+                            <tr>
+                                <td>Ramon</td>
+                                <td>633833933</td>
+                                <td>Ramon@prueba.es</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="container-fluid"></div>
         </div> <!--Fin contenedor principal-->
     </div><!-- Fin onDeviceReady-->
     <script type="text/javascript" src="cordova.js"></script>

@@ -8,11 +8,18 @@
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
     
-    function onDeviceReady() {  
-        $.get('nav.html', function (data) {
-            $('#menubar').html(data);
-            //console.log(data);
-        });
+    function onDeviceReady() {
+        // Si habilitamos la funcion para usar el mismo html en todas las paginas que tengan el div menubar no funciona el codigo vilculado a los botones del el menubar
+        // si se desabilita y se inserta el html pagina por pagina si.
+        //$.get('nav.html', function (data) {
+        //    $('#menubar').html(data);
+        //    //console.log(data);
+        //});
+
+        document.getElementById("btnlout").addEventListener('click', Ulogout, false);
+
+        var salute = localStorage.getItem("nombre");
+        $("#salute").html("<h3>Bienvenido " +salute+ " .</h3>");
     };
 
    function onPause() {
@@ -22,4 +29,12 @@
     function onResume() {
         // TODO: esta aplicación se ha reactivado. Restaure el estado de la aplicación aquí.
     };
+
+    function Ulogout() {
+        var cod = "";
+        //alert(localStorage.getItem('codigo'));
+        localStorage.removeItem('codigo');
+        window.location.href = "index.html";
+    }
+
 })();

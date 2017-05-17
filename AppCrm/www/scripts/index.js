@@ -1,5 +1,6 @@
 ﻿(function () {
     "use strict";
+    //ieepa
 
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
@@ -33,8 +34,10 @@
                     alert('Introduce un email y una contraseña validos !!');
                 } else {
                     var cod = obj.cod
+                    var nom = obj.nombre
                     //guardamos el valor del codigo en el localStorage para usarlo posteriormente
                     localStorage.setItem("codigo", cod);
+                    localStorage.setItem("nombre", nom);
                     window.location.href = "home.html";
                 };
             });
