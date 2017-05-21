@@ -8,147 +8,45 @@
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
+    
+
     function onDeviceReady() {
-            //$('#contact_form').bootstrapValidator({
-            //    // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-            //    feedbackIcons: {
-            //        valid: 'glyphicon glyphicon-ok',
-            //        invalid: 'glyphicon glyphicon-remove',
-            //        validating: 'glyphicon glyphicon-refresh'
-            //    },
-            //    fields: {
-            //        first_name: {
-            //            validators: {
-            //                stringLength: {
-            //                    min: 2,
-            //                },
-            //                notEmpty: {
-            //                    message: 'Por favor suministranos el nombre'
-            //                }
-            //            }
-            //        },
-            //        last_name: {
-            //            validators: {
-            //                stringLength: {
-            //                    min: 2,
-            //                },
-            //                notEmpty: {
-            //                    message: 'Por favor suministranos el apellido'
-            //                }
-            //            }
-            //        },
-            //        email: {
-            //            validators: {
-            //                notEmpty: {
-            //                    message: 'Por favor suministranos la dirección email'
-            //                },
-            //                emailAddress: {
-            //                    message: 'Por favor suministranos una dirección email valida'
-            //                }
-            //            }
-            //        },
-            //        phone: {
-            //            validators: {
-            //                notEmpty: {
-            //                    message: 'Por favor suministranos el Teléfono'
-            //                },
-            //                phone: {
-            //                    country: 'ES',
-            //                    message: 'Por favor suministranos un numero de teléfono valido'
-            //                }
-            //            }
-            //        },
-            //        address: {
-            //            validators: {
-            //                stringLength: {
-            //                    min: 8,
-            //                },
-            //                notEmpty: {
-            //                    message: 'Por favor suministranos una dirección'
-            //                }
-            //            }
-            //        },
-            //        city: {
-            //            validators: {
-            //                stringLength: {
-            //                    min: 4,
-            //                },
-            //                notEmpty: {
-            //                    message: 'Please supply your city'
-            //                }
-            //            }
-            //        },
-            //        state: {
-            //            validators: {
-            //                notEmpty: {
-            //                    message: 'Por favor selecciona la provincia'
-            //                }
-            //            }
-            //        },
-            //        zip: {
-            //            validators: {
-            //                notEmpty: {
-            //                    message: 'Por favor suministranos el código postal'
-            //                },
-            //                zipCode: {
-            //                    country: 'ES',
-            //                    message: 'Por favor suministranos el código postal valido'
-            //                }
-            //            }
-            //        },
-            //        company: {
-            //            validators: {
-            //                stringLength: {
-            //                    min: 4,
-            //                },
-            //                notEmpty: {
-            //                    message: 'Por favor suministranos una organización o empresa'
-            //                }
-            //            }
-            //        },
-            //        dni: {
-            //            validators: {
-            //                stringLength: {
-            //                    min: 8,
-            //                },
-            //                notEmpty: {
-            //                    message: 'Por favor suministranos un número de Identificación oficial'
-            //                }
-            //            }
-            //        },
-            //        comment: {
-            //            validators: {
-            //                stringLength: {
-            //                    min: 10,
-            //                    max: 200,
-            //                    message: 'Por favor introduce un mínimo de de 10 caracteres y no más de 200'
-            //                },
-            //                notEmpty: {
-            //                    message: 'Por favor suministranos una anotación breve'
-            //                }
-            //            }
-            //        }
-            //})
-            //    .on('success.form.bv', function (e) {
-            //        $('#success_message').slideDown({ opacity: "show" }, "slow")
-            //        // Do something ...
-            //        $('#contact_form').data('bootstrapValidator').resetForm();
 
-            //        // Prevent form submission
-            //        e.preventDefault();
+        var db = window.openDatabase( "test", "1.0", "Test DB", 1000000 );
+        db.transaction(createDB, errorCB, successCB);
 
-            //        // Get the form instance
-            //        var $form = $(e.target);
-
-            //        // Get the BootstrapValidator instance
-            //        var bv = $form.data('bootstrapValidator');
-
-            //        // Use Ajax to submit form data
-            //        $.post($form.attr('action'), $form.serialize(), function (result) {
-            //            console.log(result);
-            //        }, 'json');
-            //    });
     };
+
+    function createDB(tx) {
+        tx.executeSql('DROP TABLE IF EXISTS DEMO');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (nombre, email, telefono)');
+    }
+
+    function errorCB(err) {
+        alert("Error procesando el SQL: " + err.code);
+    }
+    function successCB() {
+        alert("Base de datos creada correctamente");
+    }
+
+    function insertDB(tx) {
+        var _nombre = $("[name='nombre']").val();
+        var _email = $("[name='email']").val();
+        var _telefono = $("[name='telefono']").val();
+        var sql = 'INSERT INTO DEMO (nombre, email, telefono) VALUES (?,?,?)';
+        tx.executeSql(sql, [_nombre, _email, _telefono], successquerryDB, errorCB);
+    }
+
+    function successquerryDB(tx) {
+        alert("consulta correcta");
+        tx.executeSql('SELECT * FROM DEMO', [], renderList, errorCB);
+    }
+
+    function submitForm() {
+        db.transaction(insertDB, errorCB);
+        window.location.href = "contactos.html";
+        return false;
+    }
 
     function onPause() {
         // TODO: esta aplicación se ha suspendido. Guarde el estado de la aplicación aquí.

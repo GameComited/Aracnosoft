@@ -12,6 +12,16 @@
         // esta linea es para cojer el valor del localstorage codigo en la variable codigo
         //var codigo = localStorage.getItem('codigo');
         //alert(codigo); 
+        function renderList(tx, results) {
+            var htmlstring = '';
+            var len = results.rows.length;
+            for (var i = 0; i < len; i++) {
+                htmlstring += '<li>' + results.rows.item(i).nombre + '<br>' + results.rows.item(i).email + '<br>' + results.rows.item(i).telefono + '</li>';
+            }
+            $('#listaresultado').html(htmlstring);
+            $('#listaresultado').listview('refresh');
+
+        }
 
     };
 

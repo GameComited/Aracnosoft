@@ -33,8 +33,8 @@
                 if (obj.result != 'OK') {
                     alert('Introduce un email y una contraseña validos !!');
                 } else {
-                    var cod = obj.cod
-                    var nom = obj.nombre
+                    var cod = obj.cod;
+                    var nom = obj.nombre;
                     //guardamos el valor del codigo en el localStorage para usarlo posteriormente
                     localStorage.setItem("codigo", cod);
                     localStorage.setItem("nombre", nom);
