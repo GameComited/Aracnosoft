@@ -1,16 +1,24 @@
-﻿function crearDB() {
-    db = window.openDatabase("Database", "1.0", "Base de datos", 2 * 1024 * 1024);
-    db.transaction(creartabla, errorCB, successCB);
-};
-function creartabla(tx) {
- // tx.executeSql('DROP TABLE IF EXISTS DEMO');
-tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (nombre, email, telefono)');
-};
+﻿
+(function () {
+    "use strict";
 
-function errorCB(err) {
-    alert("Error procesando el SQL: " + err.code);
-};
+    //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
+    document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
-function successCB() {
-    alert("Base de datos creada correctamente");
-};
+    var db = null;
+
+    function onDeviceReady() {
+
+        db = window.sqlitePlugin.openDatabase({ name: 'base1.db', location: 'default' });
+
+    };
+
+    function onPause() {
+        // TODO: esta aplicación se ha suspendido. Guarde el estado de la aplicación aquí.
+    };
+
+    function onResume() {
+        // TODO: esta aplicación se ha reactivado. Restaure el estado de la aplicación aquí.
+    };
+
+})();

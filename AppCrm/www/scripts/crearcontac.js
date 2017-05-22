@@ -8,32 +8,28 @@
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
-    var db;
+    var db = null;
 
     function onDeviceReady() {
+        db = window.sqlitePlugin.openDatabase({ name: 'demo.db', location: 'default' });
+        db.transaction(function (tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS DemoTable (name, score)');
+            tx.executeSql('INSERT INTO DemoTable VALUES (?,?)', ['Alice', 101]);
+            tx.executeSql('INSERT INTO DemoTable VALUES (?,?)', ['Betty', 202]);
+        }, function (error) {
+            console.log('Transaction ERROR: ' + error.message);
+        }, function () {
+            console.log('Populated database OK');
+        });
 
-        db = window.openDatabase("Database", "1.0", "Base de datos", 2 * 1024 * 1024);
-        var gua = document.getElementById("botonguardar");
-        gua.addEventListener('click', GuardarCampos(), false);
-    };
+        db.transaction(function (tx) {
+            tx.executeSql('SELECT count(*) AS mycount FROM DemoTable', [], function (tx, rs) {
+                console.log('Record count (expected to be 2): ' + rs.rows.item(0).mycount);
+            }, function (tx, error) {
+                console.log('SELECT error: ' + error.message);
+            });
+        });
 
-    function insertDB(tx) {
-        var _nombre = $("[name='nombre']").val();
-        var _email = $("[name='email']").val();
-        var _telefono = $("[name='telefono']").val();
-        var sql = 'INSERT INTO DEMO (nombre, email, telefono) VALUES (?,?,?)';
-        tx.executeSql(sql, [_nombre, _email, _telefono], successquerryDB, errorCB);
-    };
-
-    function successquerryDB(tx) {
-        alert("consulta correcta");
-        tx.executeSql('SELECT * FROM DEMO', [], renderList, errorCB);
-    };
-
-    function GuardarCampos() {
-        db.transaction(insertDB, errorCB);
-        window.location.href = "contactos.html";
-        return false;
     };
 
     function onPause() {
@@ -43,4 +39,5 @@
     function onResume() {
         // TODO: esta aplicación se ha reactivado. Restaure el estado de la aplicación aquí.
     };
+
 })();
