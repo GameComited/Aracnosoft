@@ -8,26 +8,14 @@
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
-    
+    var db;
 
     function onDeviceReady() {
 
-        var db = window.openDatabase( "test", "1.0", "Test DB", 1000000 );
-        db.transaction(createDB, errorCB, successCB);
-
+        db = window.openDatabase("Database", "1.0", "Base de datos", 2 * 1024 * 1024);
+        var gua = document.getElementById("botonguardar");
+        gua.addEventListener('click', GuardarCampos(), false);
     };
-
-    function createDB(tx) {
-        tx.executeSql('DROP TABLE IF EXISTS DEMO');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (nombre, email, telefono)');
-    }
-
-    function errorCB(err) {
-        alert("Error procesando el SQL: " + err.code);
-    }
-    function successCB() {
-        alert("Base de datos creada correctamente");
-    }
 
     function insertDB(tx) {
         var _nombre = $("[name='nombre']").val();
@@ -35,18 +23,18 @@
         var _telefono = $("[name='telefono']").val();
         var sql = 'INSERT INTO DEMO (nombre, email, telefono) VALUES (?,?,?)';
         tx.executeSql(sql, [_nombre, _email, _telefono], successquerryDB, errorCB);
-    }
+    };
 
     function successquerryDB(tx) {
         alert("consulta correcta");
         tx.executeSql('SELECT * FROM DEMO', [], renderList, errorCB);
-    }
+    };
 
-    function submitForm() {
+    function GuardarCampos() {
         db.transaction(insertDB, errorCB);
         window.location.href = "contactos.html";
         return false;
-    }
+    };
 
     function onPause() {
         // TODO: esta aplicación se ha suspendido. Guarde el estado de la aplicación aquí.
