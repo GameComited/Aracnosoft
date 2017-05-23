@@ -12,14 +12,17 @@
 
     function onDeviceReady() {
 
-        db = window.openDatabase("Database", "1.0", "Cordova Demo", 2 * 1024 * 1024);
+        //conectamos con la base de datos y establecemos las transacciones crear error y exito
+        db = window.openDatabase("Database", "1.0", "CRM DB", 2 * 1024 * 1024);
         db.transaction(createDB, errorCB, successCB);
+        //Cuando clickeen en el boton de guardar ejecutamos la funcion sumitform
         document.getElementById('botonguardar').addEventListener('click', submitForm, false);
     }
 
     function createDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS DEMO');
-        //tx.executeSql('DROP TABLE IF EXISTS Contactos');
+       // tx.executeSql('DROP TABLE IF EXISTS Contactos');
+        //creamos la tabla contactos si no existe
         tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion)');
 
     }
@@ -33,6 +36,7 @@
     }
 
     function insertDB(tx) {
+        // Guardamos en variables los valores de los campos del formulario con sus respectivos nombres
         var _empresa = $("[name='empresa']").val();
         var _email = $("[name='email']").val();
         var _telefono = $("[name='telefono']").val();
@@ -44,17 +48,19 @@
         var _perCon = $("[name='perCon']").val();
         var _dni = $("[name='dni']").val();
         var _anotacion = $("[name='anotacion']").val();
+        //insertamos los valores en la tabla Contatos
         var sql = 'INSERT INTO Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
         tx.executeSql(sql, [_empresa, _email, _telefono, _pais, _direccion, _ciudad, _provincia, _codigop, _perCon, _dni, _anotacion], sucessQueryDB, errorCB);
 
     }
 
     function sucessQueryDB(tx) {
-        alert("valores guardados en tabla");
-
+        //si todos los valores se guarda lo alertamos 
+        //alert("valores guardados en tabla");
         //tx.executeSql('SELECT * FROM Contactos', [], renderList, errorCB);
     }
 
+    //funcion con la que llamaremos a la funcion de insertar variables en la tabla y redireccion de la pagina
     function submitForm() {
         db.transaction(insertDB, errorsubCB);
         window.location.href = 'contactos.html';
@@ -62,6 +68,7 @@
     }
 
     function errorsubCB(e) {
+        //alertamos en caso de erros ejecutando la funcion sumitform
         alert('Error insertando los datos: ' + e.code);
     };
 

@@ -6,7 +6,7 @@
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
     function onDeviceReady() {
-
+        // funcion en la que recogemos los parametros de la url , y los guardamos en una variable 
         var getUrlParameter = function getUrlParameter(sParam) {
             var sPageURL = decodeURIComponent(window.location.search.substring(1)),
                 sURLVariables = sPageURL.split('&'),
@@ -24,8 +24,10 @@
 
         var user = getUrlParameter('usuario');
         var passw = getUrlParameter('contrasena');
-        console.log(user);
-        console.log(passw);
+        //console.log(user);
+        //console.log(passw);
+
+        // si usuario y pass son diferentes a null entonces logeamos y si el JSON no tiene error guardamos los parametros que nos pasa como son el codigo y el nombre.
 
         if (user != null && passw != null) {
             $.get('http://www.miracomovendo.com/extranet/service_login.aspx?usuario=' + user + '&contrasena=' + passw, function (data) {

@@ -11,36 +11,38 @@
     var db;
 
     function onDeviceReady() {
-        // esta linea es para cojer el valor del localstorage codigo en la variable codigo
-        //var codigo = localStorage.getItem('codigo');
-        //alert(codigo); 
 
-        db = window.openDatabase("Database", "1.0", "Cordova Demo", 2 * 1024 * 1024);
+        //conectamos con la base de datos y establecemos las transacciones crear error y exito
+        db = window.openDatabase("Database", "1.0", "CRM DB", 2 * 1024 * 1024);
         db.transaction(createDB, errorCB, successCB);
     };
 
     function successCB() {
-        alert("La base de datos se ha consultado ya!");
+        //nos alerta que se a realizado la consulta bien 
+        //alert("La base de datos se ha consultado ya!");
 
     }
 
     function createDB(tx) {
-       // tx.executeSql('DROP TABLE IF EXISTS Contactos');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (empresa, email, telefono)');
+        //creamos la tabla Contactos si no existe y seleccionamos todos los campos para luego en renderlist usarlos
+        //tx.executeSql('DROP TABLE IF EXISTS Contactos');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion)');
         tx.executeSql('SELECT * FROM Contactos', [], renderList, errorCB);
     }
 
     function errorCB(err) {
+        //nos alerta si no se consulto la tabla bien 
         alert("Error processing SQL: " + err.code);
     }
 
+    //con esta funcion imprimimos en en el dispositivo los resultados que deseamos , en este caso emprea, persona de contacto y telefono
     function renderList(tx, results) {
         var htmlstring = '';
 
         var len = results.rows.length;
 
         for (var i = 0; i < len; i++) {
-            htmlstring += '<li>Empresa: ' + results.rows.item(i).empresa + 'Contacto: ' + results.rows.item(i).perCon + ' Tlf: ' + results.rows.item(i).telefono +'</li>';
+            htmlstring += '<div class="btn btn-default col-xs-12"><div class="btn btn-default col-xs-12 font-weight-bold text-center">Empresa: ' + results.rows.item(i).empresa + '</div><div class="btn col-xs-12 col-sm-6">Contacto: ' + results.rows.item(i).perCon + '</div><div <div class="btn col-xs-12 col-sm-6">Tlf: ' + results.rows.item(i).telefono +'</div><br></div>';
 
         }
 
