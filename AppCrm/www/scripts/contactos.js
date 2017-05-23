@@ -16,7 +16,7 @@
         //alert(codigo); 
 
         db = window.openDatabase("Database", "1.0", "Cordova Demo", 2 * 1024 * 1024);
-        db.readTransaction(ConsultarDB, errorCB, successCB);
+        db.transaction(createDB, errorCB, successCB);
     };
 
     function successCB() {
@@ -24,14 +24,28 @@
 
     }
 
-    function ConsultarDB() {
-        alert("Estamos consultado la base de datos");
+    function createDB(tx) {
+       // tx.executeSql('DROP TABLE IF EXISTS Contactos');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (empresa, email, telefono)');
+        tx.executeSql('SELECT * FROM Contactos', [], renderList, errorCB);
     }
 
     function errorCB(err) {
         alert("Error processing SQL: " + err.code);
     }
 
+    function renderList(tx, results) {
+        var htmlstring = '';
+
+        var len = results.rows.length;
+
+        for (var i = 0; i < len; i++) {
+            htmlstring += '<li>Empresa: ' + results.rows.item(i).empresa + 'Contacto: ' + results.rows.item(i).perCon + ' Tlf: ' + results.rows.item(i).telefono +'</li>';
+
+        }
+
+        $('#listaresultado').html(htmlstring);
+    }
 
     function onPause() {
         // TODO: esta aplicación se ha suspendido. Guarde el estado de la aplicación aquí.

@@ -18,8 +18,9 @@
     }
 
     function createDB(tx) {
-        tx.executeSql('DROP TABLE IF EXISTS Contactos');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (nombre, email, telefono)');
+        //tx.executeSql('DROP TABLE IF EXISTS DEMO');
+        //tx.executeSql('DROP TABLE IF EXISTS Contactos');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion)');
 
     }
 
@@ -32,11 +33,19 @@
     }
 
     function insertDB(tx) {
-        var _nombre = $("[name='nombre']").val();
+        var _empresa = $("[name='empresa']").val();
         var _email = $("[name='email']").val();
         var _telefono = $("[name='telefono']").val();
-        var sql = 'INSERT INTO Contactos (nombre, email, telefono) VALUES (?,?,?)';
-        tx.executeSql(sql, [_nombre, _email, _telefono], sucessQueryDB, errorCB);
+        var _pais = $("[name='pais']").val();
+        var _direccion = $("[name='direccion']").val();
+        var _ciudad = $("[name='ciudad']").val();
+        var _provincia = $("[name='provincia']").val();
+        var _codigop = $("[name='codigop']").val();
+        var _perCon = $("[name='perCon']").val();
+        var _dni = $("[name='dni']").val();
+        var _anotacion = $("[name='anotacion']").val();
+        var sql = 'INSERT INTO Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
+        tx.executeSql(sql, [_empresa, _email, _telefono, _pais, _direccion, _ciudad, _provincia, _codigop, _perCon, _dni, _anotacion], sucessQueryDB, errorCB);
 
     }
 
@@ -46,60 +55,15 @@
         //tx.executeSql('SELECT * FROM Contactos', [], renderList, errorCB);
     }
 
-    //function renderList(tx, results) {
-    //    var htmlstring = '';
-
-    //    var len = results.rows.length;
-
-    //    for (var i = 0; i < len; i++) {
-    //        htmlstring += '<li>' + results.rows.item(i).title + '</li>';
-
-    //    }
-
-    //    $('#resultList').html(htmlstring);
-    //    $('#resultList').listview('refresh');
-
-
-    //}
-
     function submitForm() {
-        db.transaction(insertDB, errorCB);
+        db.transaction(insertDB, errorsubCB);
         window.location.href = 'contactos.html';
         return false; 
     }
 
-
-
-
-
-    //var db;
-
-    //function onDeviceReady() {
-
-    //    var db = openDatabase('baseDatos', '', 'Base de Datos', 5 * 1024);
-    //    db.transaction()
-
-    //    document.getElementById('botonguardar').addEventListener('click', Gdatos , false);
-    //};
-
-    //function errorCB(err) {
-    //    alert("Error procesando SQL: " + err.code);
-
-    //};
-
-    //function successCB() {
-    //    alert("base de datos cargada");
-
-    //};
-
-    //function Gdatos() {
-    //    db.transaction(function (tx) {
-    //        tx.executeSql('create table if not exists Contactos(nombre, email, telefono)');
-    //        tx.executeSql('insert into Contactos(nombre, email, telefono) values (?,?,?)', ["jose", "doval@doval.com", 670001133]);
-
-    //    }, errorCB, successCB);
-    //    //var _nombre = tx.executeSql('select name, email, telefono, from Contactos where name = jose');
-    //};
+    function errorsubCB(e) {
+        alert('Error insertando los datos: ' + e.code);
+    };
 
     function onPause() {
         // TODO: esta aplicación se ha suspendido. Guarde el estado de la aplicación aquí.
