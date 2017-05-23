@@ -8,22 +8,30 @@
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
+    var db;
+
     function onDeviceReady() {
         // esta linea es para cojer el valor del localstorage codigo en la variable codigo
         //var codigo = localStorage.getItem('codigo');
         //alert(codigo); 
-        function renderList(tx, results) {
-            var htmlstring = '';
-            var len = results.rows.length;
-            for (var i = 0; i < len; i++) {
-                htmlstring += '<li>' + results.rows.item(i).nombre + '<br>' + results.rows.item(i).email + '<br>' + results.rows.item(i).telefono + '</li>';
-            }
-            $('#listaresultado').html(htmlstring);
-            $('#listaresultado').listview('refresh');
 
-        }
-
+        db = window.openDatabase("Database", "1.0", "Cordova Demo", 2 * 1024 * 1024);
+        db.readTransaction(ConsultarDB, errorCB, successCB);
     };
+
+    function successCB() {
+        alert("La base de datos se ha consultado ya!");
+
+    }
+
+    function ConsultarDB() {
+        alert("Estamos consultado la base de datos");
+    }
+
+    function errorCB(err) {
+        alert("Error processing SQL: " + err.code);
+    }
+
 
     function onPause() {
         // TODO: esta aplicación se ha suspendido. Guarde el estado de la aplicación aquí.
