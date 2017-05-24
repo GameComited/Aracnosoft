@@ -42,7 +42,7 @@
         var len = results.rows.length;
 
         for (var i = 0; i < len; i++) {
-            htmlstring += '<div class="btn btn-default col-xs-12"><div class="btn btn-default col-xs-12 font-weight-bold text-center">Empresa: ' + results.rows.item(i).empresa + '</div><div class="btn col-xs-12 col-sm-6">Contacto: ' + results.rows.item(i).perCon + '</div><div <div class="btn col-xs-12 col-sm-6">Tlf: ' + results.rows.item(i).telefono +'</div><br></div>';
+            htmlstring += '<button type="button" class="btn btn-default col-xs-12"><span class="text-success text-center" style="font-size:70%">' + results.rows.item(i).empresa + '</span><br><span style="font-size:60%">' + results.rows.item(i).perCon + '</span><span style="font-size:60%"> &nbsp;&nbsp;' + results.rows.item(i).telefono +'</span></button>';
 
         }
 
