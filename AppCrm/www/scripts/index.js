@@ -1,6 +1,6 @@
 ﻿(function () {
     "use strict";
-    //ieepa
+  
 
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
