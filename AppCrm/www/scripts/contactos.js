@@ -15,6 +15,7 @@
         //conectamos con la base de datos y establecemos las transacciones crear error y exito
         db = window.openDatabase("Database", "1.0", "CRM DB", 2 * 1024 * 1024);
         db.transaction(createDB, errorCB, successCB);
+        //alert('conectamos con la bd');
     };
 
     function successCB() {
@@ -27,6 +28,7 @@
         //creamos la tabla Contactos si no existe y seleccionamos todos los campos para luego en renderlist usarlos
         //tx.executeSql('DROP TABLE IF EXISTS Contactos');
         tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion)');
+        //alert('creamos la tabla si no existe');
         tx.executeSql('SELECT * FROM Contactos', [], renderList, errorCB);
     }
 
@@ -37,6 +39,7 @@
 
     //con esta funcion imprimimos en en el dispositivo los resultados que deseamos , en este caso emprea, persona de contacto y telefono
     function renderList(tx, results) {
+        //alert('empieza el renderlist');
         var htmlstring = '';
 
         var len = results.rows.length;
@@ -47,6 +50,7 @@
         }
 
         $('#listaresultado').html(htmlstring);
+        //alert('acaba renderlist');
     }
 
     function onPause() {

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="io.cordova.myappeb36f5" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="es-ES">
+<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="io.cordova.myappeb36f7" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="es-ES">
   <name>AppCrm</name>
   <description>Aplicacion CRM para la empresa Aracnosoft</description>
   <author href="http://cordova.io" email="dev@cordova.apache.org">Jose Angel Doval Fraga</author>

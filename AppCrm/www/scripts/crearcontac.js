@@ -32,8 +32,10 @@
     }
 
     function successCB() {
-        //alert("YEAH!!!!");
+       //lert("base de datos conectada");
     }
+
+    //var _empresa;
 
     function insertDB(tx) {
         // Guardamos en variables los valores de los campos del formulario con sus respectivos nombres
@@ -49,14 +51,21 @@
         var _dni = $("[name='dni']").val();
         var _anotacion = $("[name='anotacion']").val();
         //insertamos los valores en la tabla Contatos
+        //alert('valores insertados en las variables');
         var sql = 'INSERT INTO Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
-        tx.executeSql(sql, [_empresa, _email, _telefono, _pais, _direccion, _ciudad, _provincia, _codigop, _perCon, _dni, _anotacion], sucessQueryDB, errorCB);
+        tx.executeSql(sql, [_empresa, _email, _telefono, _pais, _direccion, _ciudad, _provincia, _codigop, _perCon, _dni, _anotacion], sucessQueryDB, errorsub2CB);
+        //alert(_empresa);
 
     }
+    function errorsub2CB(er) {
+        //alertamos en caso de erros ejecutando la funcion sumitform
+        alert('Error insertando los datos: ' + er.code);
+    };
 
     function sucessQueryDB(tx) {
         //si todos los valores se guarda lo alertamos 
-        //alert("valores guardados en tabla");
+        //alert(_empresa);
+       //alert("tabla creada con callback");
         //tx.executeSql('SELECT * FROM Contactos', [], renderList, errorCB);
     }
 
