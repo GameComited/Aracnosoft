@@ -8,12 +8,13 @@
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
-    var db;
+    var db = null;
 
     function onDeviceReady() {
 
         //conectamos con la base de datos y establecemos las transacciones crear error y exito
-        db = window.openDatabase("Database", "1.0", "CRM DB", 2 * 1024 * 1024);
+        db = window.sqlitePlugin.openDatabase({ name: 'database.db', location: 'default' });
+        //db = window.openDatabase("Database", "1.0", "CRM DB", 2 * 1024 * 1024);
         db.transaction(createDB, errorCB, successCB);
         //alert('conectamos con la bd');
     };
@@ -45,7 +46,8 @@
         var len = results.rows.length;
 
         for (var i = 0; i < len; i++) {
-            htmlstring += '<button type="button" class="btn btn-default col-xs-12"><span class="text-success text-center" style="font-size:70%">' + results.rows.item(i).empresa + '</span><br><span style="font-size:60%">' + results.rows.item(i).perCon + '</span><span style="font-size:60%"> &nbsp;&nbsp;' + results.rows.item(i).telefono +'</span></button>';
+          //  htmlstring += '<button type="button" class="btn btn-default col-xs-12"><span class="text-success text-center" style="font-size:70%">' + results.rows.item(i).empresa + '</span><br><span style="font-size:60%">' + results.rows.item(i).perCon + '</span><span style="font-size:60%"> &nbsp;&nbsp;' + results.rows.item(i).telefono +'</span></button>';
+            htmlstring += '<div>' + results.rows.item(i).empresa + '</div>';
 
         }
 

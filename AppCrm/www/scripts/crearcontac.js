@@ -8,12 +8,13 @@
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
-    var db;
+    var db = null;
 
     function onDeviceReady() {
 
         //conectamos con la base de datos y establecemos las transacciones crear error y exito
-        db = window.openDatabase("Database", "1.0", "CRM DB", 2 * 1024 * 1024);
+        db = window.sqlitePlugin.openDatabase({ name : 'database.db', location : 'default' });
+        //db = window.openDatabase("Database", "1.0", "CRM DB", 2 * 1024 * 1024);
         db.transaction(createDB, errorCB, successCB);
         //Cuando clickeen en el boton de guardar ejecutamos la funcion sumitform
         document.getElementById('botonguardar').addEventListener('click', submitForm, false);
@@ -32,7 +33,7 @@
     }
 
     function successCB() {
-       //lert("base de datos conectada");
+       alert("base de datos conectada");
     }
 
     //var _empresa;
@@ -54,7 +55,6 @@
         //alert('valores insertados en las variables');
         var sql = 'INSERT INTO Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
         tx.executeSql(sql, [_empresa, _email, _telefono, _pais, _direccion, _ciudad, _provincia, _codigop, _perCon, _dni, _anotacion], sucessQueryDB, errorsub2CB);
-        //alert(_empresa);
 
     }
     function errorsub2CB(er) {
