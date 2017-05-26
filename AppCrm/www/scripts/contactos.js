@@ -8,13 +8,12 @@
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
-    var db = null;
+    var db; 
 
     function onDeviceReady() {
 
         //conectamos con la base de datos y establecemos las transacciones crear error y exito
-        db = window.sqlitePlugin.openDatabase({ name: 'database.db', location: 'default' });
-        //db = window.openDatabase("Database", "1.0", "CRM DB", 2 * 1024 * 1024);
+        db = window.openDatabase("Database", "1.0", "CRM DB", 5 * 1024 * 1024 );
         db.transaction(createDB, errorCB, successCB);
         //alert('conectamos con la bd');
     };
@@ -22,13 +21,12 @@
     function successCB() {
         //nos alerta que se a realizado la consulta bien 
         //alert("La base de datos se ha consultado ya!");
-
     }
 
     function createDB(tx) {
         //creamos la tabla Contactos si no existe y seleccionamos todos los campos para luego en renderlist usarlos
         //tx.executeSql('DROP TABLE IF EXISTS Contactos');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (id INTEGER PRIMARY KEY AUTOINCREMENT, empresa TEXT NOT NULL, email TEXT NOT NULL, telefono TEXT NOT NULL, pais TEXT NOT NULL, direccion TEXT NOT NULL, ciudad TEXT NOT NULL, provincia TEXT NOT NULL, codigop TEXT NOT NULL, perCon TEXT NOT NULL, dni TEXT NOT NULL, anotacion TEXT NOT NULL)');
         //alert('creamos la tabla si no existe');
         tx.executeSql('SELECT * FROM Contactos', [], renderList, errorCB);
     }
@@ -46,12 +44,11 @@
         var len = results.rows.length;
 
         for (var i = 0; i < len; i++) {
-          //  htmlstring += '<button type="button" class="btn btn-default col-xs-12"><span class="text-success text-center" style="font-size:70%">' + results.rows.item(i).empresa + '</span><br><span style="font-size:60%">' + results.rows.item(i).perCon + '</span><span style="font-size:60%"> &nbsp;&nbsp;' + results.rows.item(i).telefono +'</span></button>';
-            htmlstring += '<div>' + results.rows.item(i).empresa + '</div>';
-
+            htmlstring += '<button type="button" class="btn btn-default col-xs-12"><span class="text-success text-center" style="font-size:70%">' + results.rows.item(i).empresa + '</span><br><span style="font-size:60%">' + results.rows.item(i).perCon + '</span><span style="font-size:60%"> &nbsp;&nbsp;' + results.rows.item(i).telefono + '</span></button>';
+            alert('dentro del for');
         }
 
-        $('#listaresultado').html(htmlstring);
+        $("#listaresultado").html(htmlstring);
         //alert('acaba renderlist');
     }
 

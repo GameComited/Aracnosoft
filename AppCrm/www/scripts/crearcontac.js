@@ -8,49 +8,59 @@
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
-    var db = null;
+    var db;
 
     function onDeviceReady() {
 
         //conectamos con la base de datos y establecemos las transacciones crear error y exito
-        db = window.sqlitePlugin.openDatabase({ name : 'database.db', location : 'default' });
-        //db = window.openDatabase("Database", "1.0", "CRM DB", 2 * 1024 * 1024);
-        db.transaction(createDB, errorCB, successCB);
+        db = window.openDatabase("Database", "1.0", "CRM DB", 5 * 1024 * 1024);
+        //db.transaction(createDB, errorCB, successCB);
         //Cuando clickeen en el boton de guardar ejecutamos la funcion sumitform
         document.getElementById('botonguardar').addEventListener('click', submitForm, false);
     }
 
-    function createDB(tx) {
-        //tx.executeSql('DROP TABLE IF EXISTS DEMO');
-       // tx.executeSql('DROP TABLE IF EXISTS Contactos');
-        //creamos la tabla contactos si no existe
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion)');
+    //function createDB(tx) {
+    //    //tx.executeSql('DROP TABLE IF EXISTS DEMO');
+    //   // tx.executeSql('DROP TABLE IF EXISTS Contactos');
+    //    //creamos la tabla contactos si no existe
+    //    tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion)');
 
-    }
+    //}
 
-    function errorCB(err) {
-        alert("Error processing SQL: " + err.code);
-    }
+    //function errorCB(err) {
+    //    alert("Error processing SQL: " + err.code);
+    //}
 
-    function successCB() {
-       alert("base de datos conectada");
-    }
+    //function successCB() {
+    //   //alert("base de datos conectada");
+    //}
 
     //var _empresa;
 
     function insertDB(tx) {
         // Guardamos en variables los valores de los campos del formulario con sus respectivos nombres
         var _empresa = $("[name='empresa']").val();
+        alert(_empresa);
         var _email = $("[name='email']").val();
+        alert(_email);
         var _telefono = $("[name='telefono']").val();
+        alert(_telefono);
         var _pais = $("[name='pais']").val();
+        alert(_pais);
         var _direccion = $("[name='direccion']").val();
+        alert(_direccion);
         var _ciudad = $("[name='ciudad']").val();
+        alert(_ciudad);
         var _provincia = $("[name='provincia']").val();
+        alert(_provincia);
         var _codigop = $("[name='codigop']").val();
+        alert(_codigop);
         var _perCon = $("[name='perCon']").val();
+        alert(_perCon);
         var _dni = $("[name='dni']").val();
+        alert(_dni);
         var _anotacion = $("[name='anotacion']").val();
+        alert(_anotacion);
         //insertamos los valores en la tabla Contatos
         //alert('valores insertados en las variables');
         var sql = 'INSERT INTO Contactos (empresa, email, telefono, pais, direccion, ciudad, provincia, codigop, perCon, dni, anotacion) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
@@ -63,9 +73,7 @@
     };
 
     function sucessQueryDB(tx) {
-        //si todos los valores se guarda lo alertamos 
-        //alert(_empresa);
-       //alert("tabla creada con callback");
+        //alert(sql);
         //tx.executeSql('SELECT * FROM Contactos', [], renderList, errorCB);
     }
 
