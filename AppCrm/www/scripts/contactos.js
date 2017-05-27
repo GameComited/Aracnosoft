@@ -8,7 +8,7 @@
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
-    var db = null;
+    var db; 
 
     function onDeviceReady() {
 
@@ -20,7 +20,6 @@
     function successCB() {
         //nos alerta que se a realizado la consulta bien 
         //alert("La base de datos se ha consultado ya!");
-
     }
 
     function createDB(tx) {
