@@ -45,7 +45,8 @@
     }
 
     function successoutCB() {
-        //no necesitamos poner codigo en el success
+        // Eliminamos la tabla
+        tx.executeSql('DROP TABLE IF EXISTS Contactos');
     }
 
     function erroroutCB(err) {
