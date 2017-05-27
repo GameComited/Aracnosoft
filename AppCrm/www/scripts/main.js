@@ -8,6 +8,8 @@
     //Escuchamos y cuando llega al id deviceready ejecuta la funcion OnDeviceReady()
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
     
+    var db;
+
     function onDeviceReady() {
 
         //escuchamos por la accion click sobre el boton de cerrar sesion
@@ -18,23 +20,45 @@
         $("#salute").html("<h3>Bienvenido " +salute+ " .</h3>");
     };
 
-   function onPause() {
-        // TODO: esta aplicación se ha suspendido. Guarde el estado de la aplicación aquí.
-    };
-
-    function onResume() {
-        // TODO: esta aplicación se ha reactivado. Restaure el estado de la aplicación aquí.
-    };
-
     // funcion donde borramos las variables y el localstorage para dejar todo limpio y cerrar sesion
     function Ulogout() {
+        
+        db = window.openDatabase("BasedeDatos", "1.0", "CRM DB", 10 * 1024 * 1024);
+        db.transaction(borrarDB, erroroutCB, successoutCB);
+
         var cod = "";
         var nom = "";
         var salute = "";
         //alert(localStorage.getItem('codigo'));
         localStorage.removeItem('nombre');
         localStorage.removeItem('codigo');
+
+        // Cambiamos de ventana hacia el login 
+
         window.location.href = "index.html";
     }
+
+    function borrarDB(tx) {
+        // Eliminamos la tabla
+        tx.executeSql('DROP TABLE IF EXISTS Contactos');
+
+    }
+
+    function successoutCB() {
+        //no necesitamos poner codigo en el success
+    }
+
+    function erroroutCB(err) {
+        //nos alerta en caso de error con la conexion sql 
+        alert("Error processing SQL: " + err.code);
+    }
+
+    function onPause() {
+        // TODO: esta aplicación se ha suspendido. Guarde el estado de la aplicación aquí.
+    };
+
+    function onResume() {
+        // TODO: esta aplicación se ha reactivado. Restaure el estado de la aplicación aquí.
+    };
 
 })();
