@@ -23,7 +23,7 @@
     // funcion donde borramos las variables y el localstorage para dejar todo limpio y cerrar sesion
     function Ulogout() {
         
-        db = window.openDatabase("BasedeDatos", "1.0", "CRM DB", 10 * 1024 * 1024);
+        db = window.openDatabase("BasedeDatos", "1.0", "CRM DB", 5 * 1024 * 1024);
         db.transaction(borrarDB, erroroutCB, successoutCB);
 
         var cod = "";

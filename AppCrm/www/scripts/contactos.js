@@ -13,7 +13,7 @@
     function onDeviceReady() {
 
         //conectamos con la base de datos y establecemos las transacciones crear error y exito
-        db = window.openDatabase("BasedeDatos", "1.0", "CRM DB", 10 * 1024 * 1024 );
+        db = window.openDatabase("BasedeDatos", "1.0", "CRM DB", 5 * 1024 * 1024 );
         db.transaction(createDB, errorCB, successCB);
     };
 

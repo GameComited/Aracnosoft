@@ -12,7 +12,7 @@
 
     function onDeviceReady() {
 
-        db = window.openDatabase("BasedeDatos", "1.0", "CRM DB", 10 * 1024 * 1024);
+        db = window.openDatabase("BasedeDatos", "1.0", "CRM DB", 5 * 1024 * 1024);
         //Cuando clickeen en el boton de guardar ejecutamos la funcion sumitform
         document.getElementById('botonguardar').addEventListener('click', submitForm, false);
     }
