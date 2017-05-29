@@ -12,7 +12,43 @@
 
     function onDeviceReady() {
 
+        // conectamos con la base de datos
         db = window.openDatabase("BasedeDatos", "1.0", "CRM DB", 5 * 1024 * 1024);
+
+        // recogemos los parametros de la barra de direcciones 
+            var getUrlParameter = function getUrlParameter(sParam) {
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : sParameterName[1];
+                    }
+                }
+            };
+
+        // guardamos en una variable los parametros recogidos desde la  barra de direcciones
+            var _id = getUrlParameter('id');
+            var _empresa_ = getUrlParameter('empresa');
+
+        // si el id es diferente a vacio y la empresa es diferente a vacio (vamos que tienen datos ) pues guardamos el dato en el localStorage y modificamos varios elementod del DOM
+            if ( _id != null && _empresa_ != null ){
+
+               // alert(_id);
+                localStorage.setItem("idcont", _id);
+
+                $("#tituloCrearContacto").html("Modifica el contacto: " + _empresa_);
+                $("#botonguardar").html("Modificar");
+                //jQuery(this).prev("button").attr("id", "botonmodificar");
+                //document.getElementById('botonmodificar').addEventListener('click', modificarForm, false);
+
+            };
+
+
         //Cuando clickeen en el boton de guardar ejecutamos la funcion sumitform
         document.getElementById('botonguardar').addEventListener('click', submitForm, false);
     }
@@ -53,15 +89,25 @@
     };
 
     function sucessQueryDB(tx) {
-        alert('exito insertando en contactos');
+        //alert('exito insertando en contactos');
         window.location.href = 'contactos.html';
         //tx.executeSql('SELECT * FROM Contactos', [], renderList, errorCB);
     }
 
     //funcion con la que llamaremos a la funcion de insertar variables en la tabla y redireccion de la pagina
     function submitForm() {
-        db.transaction(insertDB, errorsubCB);
-        return false; 
+        // recogemos en una variables el valor idcont que guardamos antes en el localStorage
+        var botonmodificar = localStorage.getItem("idcont");
+        // si este valor es diferente a vacio entonces ejecutamos este codigo 
+        if (botonmodificar != null) {
+            alert("vas a modificar el contacto");
+            localStorage.removeItem("idcont");
+       // si este valor esta vacio entonces significa que es un contacto nuevo y seguimos con e la funcion
+        } else {
+            // realizamos la transaccion (vamos para la funcion insertDB)
+            db.transaction(insertDB, errorsubCB);
+            return false;
+        }
     }
 
     function errorsubCB(e) {

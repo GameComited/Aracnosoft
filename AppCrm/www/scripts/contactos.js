@@ -15,6 +15,7 @@
         //conectamos con la base de datos y establecemos las transacciones crear error y exito
         db = window.openDatabase("BasedeDatos", "1.0", "CRM DB", 5 * 1024 * 1024 );
         db.transaction(createDB, errorCB, successCB);
+
     };
 
     function successCB() {
@@ -25,7 +26,7 @@
     function createDB(tx) {
 
         //creamos la tabla Contactos si no existe y seleccionamos todos los campos para luego en renderlist usarlos
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (empresa text, email text, telefono text, pais text, direccion text, ciudad text, provincia text, codigop text, perCon text, dni text, anotacion text)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Contactos (idcontacto INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, empresa text, email text, telefono text, pais text, direccion text, ciudad text, provincia text, codigop text, perCon text, dni text, anotacion text)');
 
         tx.executeSql('SELECT * FROM Contactos', [], renderList, errorCB);
     }
@@ -41,9 +42,12 @@
         var htmlstring = '';
 
         var len = results.rows.length;
-
+        
         for (var i = 0; i < len; i++) {
-            htmlstring += '<button type="button" class="btn btn-default col-xs-12"><span class="text-success text-center" style="font-size:70%">' + results.rows.item(i).empresa + '</span><br><span style="font-size:60%">' + results.rows.item(i).perCon + '</span><span style="font-size:60%"> &nbsp;&nbsp;' + results.rows.item(i).telefono + '</span></button>';
+
+            htmlstring += '<li><a href="crearContac.html?id=' + results.rows.item(i).idcontacto + '&empresa=' + results.rows.item(i).empresa + '"><span class="text- success text- center" style="font- size:70 % ">' + results.rows.item(i).empresa + '</span></a></li><li><span style="font- size:60 % ">' + results.rows.item(i).perCon + '</span><span style="font- size:60 % "> &nbsp;&nbsp;' + results.rows.item(i).telefono + '</span></li>';
+
+            //htmlstring += '<button type="button" href="usermodify.html" class="btn btn-default col-xs-12"><span class="text-success text-center" style="font-size:70%">' + results.rows.item(i).empresa + '</span><br><span style="font-size:60%">' + results.rows.item(i).perCon + '</span><span style="font-size:60%"> &nbsp;&nbsp;' + results.rows.item(i).telefono + '</span></button>';
         }
 
         $("#listaresultado").html(htmlstring);
